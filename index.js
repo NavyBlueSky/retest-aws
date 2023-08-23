@@ -7,7 +7,7 @@ const app = express();
 const PORT = 8000;
 
 //aws 설정
-aws.config,update({
+aws.config.update({
     accessKeyId: 'AKIAWF4OHA5JPWCZVB5A',
     secretAccessKey: "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",
     region: 'ap-northeast-2'
@@ -39,10 +39,10 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 const upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: 'test-server-multer-si',
+        bucket: 'lyle-kdt9-bucket',
         acl: 'public-read', // 파일접근권한 (public-read로 해야 업로드된 파일이 공개)
         metadata: function(req, file, cb) {
-            cb(null, {fileName: file.filename});
+            cb(null, {fieldName: file.fieldname});
         },
         key: function(req, file, cb) {
             cb(null, Date.now().toString() + '-' + file.originalname);
